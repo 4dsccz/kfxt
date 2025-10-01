@@ -10,12 +10,13 @@
     <BasicTable
       :columns="columns"
       :request="loadDataTable"
-      :row-key="(row:ListData) => row.id"
+      :row-key="(row:PdXmItem) => row.id"
       ref="actionRef"
       :actionColumn="actionColumn"
       @update:checked-row-keys="onCheckedRow"
       :scroll-x="1090"
       :striped="true"
+      :resizable="true"
     >
       <template #tableTitle>
         <n-button type="primary" @click="addTable">
@@ -69,7 +70,7 @@ import { PlusOutlined } from '@vicons/antd'
 import { type FormRules } from 'naive-ui'
 import { h, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { columns, ListData } from './columns'
+import { columns, PdXmItem } from './EvaluationItems'
 
 const rules: FormRules = {
   name: {
@@ -252,23 +253,6 @@ const actionColumn = reactive({
             return true
           },
           auth: ['basic_list']
-        }
-      ],
-      dropDownActions: [
-        {
-          label: '启用',
-          key: 'enabled',
-          // 根据业务控制是否显示: 非enable状态的不显示启用按钮
-          ifShow: () => {
-            return true
-          }
-        },
-        {
-          label: '禁用',
-          key: 'disabled',
-          ifShow: () => {
-            return true
-          }
         }
       ],
       select: key => {

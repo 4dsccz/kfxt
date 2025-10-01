@@ -9,18 +9,18 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
-  import { NDialogProvider, NNotificationProvider, NMessageProvider } from 'naive-ui';
+import { NDialogProvider, NMessageProvider, NNotificationProvider } from 'naive-ui'
+import { defineComponent } from 'vue'
 
-  export default defineComponent({
-    name: 'Application',
-    components: {
-      NDialogProvider,
-      NNotificationProvider,
-      NMessageProvider,
-    },
-    setup() {
-      return {};
-    },
-  });
+export default defineComponent({
+  name: 'Application',
+  components: {
+    NDialogProvider,
+    NNotificationProvider,
+    NMessageProvider
+  },
+  setup() {
+    return {}
+  }
+})
 </script>

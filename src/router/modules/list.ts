@@ -1,7 +1,7 @@
-import { RouteRecordRaw } from 'vue-router';
-import { Layout } from '@/router/constant';
-import { TableOutlined } from '@vicons/antd';
-import { renderIcon } from '@/utils/index';
+import { Layout } from '@/router/constant'
+import { renderIcon } from '@/utils/index'
+import { TableOutlined } from '@vicons/antd'
+import { RouteRecordRaw } from 'vue-router'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -12,16 +12,24 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '列表页面',
       icon: renderIcon(TableOutlined),
-      sort: 2,
+      sort: 2
     },
     children: [
       {
         path: 'basic-list',
         name: 'basic-list',
         meta: {
-          title: '基础列表',
+          title: '基础列表'
         },
-        component: () => import('@/views/list/basicList/index.vue'),
+        component: () => import('@/views/list/basicList/index.vue')
+      },
+      {
+        path: 'EvaluationItems',
+        name: 'EvaluationItems',
+        meta: {
+          title: '评定项目维护'
+        },
+        component: () => import('@/views/list/EvaluationItems.vue')
       },
       {
         path: 'basic-info/:id?',
@@ -29,12 +37,12 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           title: '基础详情',
           hidden: true,
-          activeMenu: 'basic-list',
+          activeMenu: 'basic-list'
         },
-        component: () => import('@/views/list/basicList/info.vue'),
-      },
-    ],
-  },
-];
+        component: () => import('@/views/list/basicList/info.vue')
+      }
+    ]
+  }
+]
 
-export default routes;
+export default routes

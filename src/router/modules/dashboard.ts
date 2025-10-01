@@ -1,9 +1,9 @@
-import { RouteRecordRaw } from 'vue-router';
-import { Layout } from '@/router/constant';
-import { DashboardOutlined } from '@vicons/antd';
-import { renderIcon } from '@/utils/index';
+import { Layout } from '@/router/constant'
+import { renderIcon } from '@/utils/index'
+import { DashboardOutlined } from '@vicons/antd'
+import { RouteRecordRaw } from 'vue-router'
 
-const routeName = 'dashboard';
+const routeName = 'dashboard'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
       title: 'Dashboard',
       icon: renderIcon(DashboardOutlined),
       permissions: ['dashboard_console', 'dashboard_console', 'dashboard_workplace'],
-      sort: 0,
+      sort: 0
     },
     children: [
       {
@@ -24,9 +24,9 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           title: '主控台',
           permissions: ['dashboard_console'],
-          affix: true,
+          affix: true
         },
-        component: () => import('@/views/dashboard/console/console.vue'),
+        component: () => import('@/views/dashboard/console/console.vue')
       },
       // {
       //   path: 'monitor',
@@ -43,12 +43,12 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           title: '工作台',
           keepAlive: true,
-          permissions: ['dashboard_workplace'],
+          permissions: ['dashboard_workplace']
         },
-        component: () => import('@/views/dashboard/workplace/workplace.vue'),
-      },
-    ],
-  },
-];
+        component: () => import('@/views/dashboard/workplace/workplace.vue')
+      }
+    ]
+  }
+]
 
-export default routes;
+export default routes

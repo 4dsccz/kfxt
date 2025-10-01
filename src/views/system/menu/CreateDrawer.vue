@@ -47,73 +47,73 @@
 </template>
 
 <script lang="ts" setup>
-  import { reactive, ref, toRefs } from 'vue';
-  import { useMessage } from 'naive-ui';
+import { useMessage } from 'naive-ui'
+import { reactive, ref } from 'vue'
 
-  const rules = {
-    label: {
-      required: true,
-      message: '请输入标题',
-      trigger: 'blur',
-    },
-    path: {
-      required: true,
-      message: '请输入路径',
-      trigger: 'blur',
-    },
-  };
-
-  defineProps({
-    title: {
-      type: String,
-      default: '添加顶级菜单',
-    },
-    width: {
-      type: Number,
-      default: 450,
-    },
-  });
-
-  const message = useMessage();
-  const formRef: any = ref(null);
-  const defaultValueRef = () => ({
-    label: '',
-    type: 1,
-    subtitle: '',
-    openType: 1,
-    auth: '',
-    path: '',
-    hidden: false,
-  });
-  const formParams = ref(defaultValueRef());
-  const state = reactive({
-    isDrawer: false,
-    subLoading: false,
-    placement: 'right' as const,
-  });
-
-  function openDrawer() {
-    state.isDrawer = true;
+const rules = {
+  label: {
+    required: true,
+    message: '请输入标题',
+    trigger: 'blur'
+  },
+  path: {
+    required: true,
+    message: '请输入路径',
+    trigger: 'blur'
   }
+}
 
-  function closeDrawer() {
-    state.isDrawer = false;
+defineProps({
+  title: {
+    type: String,
+    default: '添加顶级菜单'
+  },
+  width: {
+    type: Number,
+    default: 450
   }
+})
 
-  function formSubmit() {
-    formRef.value.validate((errors) => {
-      if (!errors) {
-        message.success('添加成功');
-        handleReset();
-        closeDrawer();
-      } else {
-        message.error('请填写完整信息');
-      }
-    });
-  }
+const message = useMessage()
+const formRef: any = ref(null)
+const defaultValueRef = () => ({
+  label: '',
+  type: 1,
+  subtitle: '',
+  openType: 1,
+  auth: '',
+  path: '',
+  hidden: false
+})
+const formParams = ref(defaultValueRef())
+const state = reactive({
+  isDrawer: false,
+  subLoading: false,
+  placement: 'right' as const
+})
 
-  function handleReset() {
-    formRef.value.restoreValidation();
-    formParams.value = Object.assign(formParams.value, defaultValueRef());
-  }
+function openDrawer() {
+  state.isDrawer = true
+}
+
+function closeDrawer() {
+  state.isDrawer = false
+}
+
+function formSubmit() {
+  formRef.value.validate(errors => {
+    if (!errors) {
+      message.success('添加成功')
+      handleReset()
+      closeDrawer()
+    } else {
+      message.error('请填写完整信息')
+    }
+  })
+}
+
+function handleReset() {
+  formRef.value.restoreValidation()
+  formParams.value = Object.assign(formParams.value, defaultValueRef())
+}
 </script>

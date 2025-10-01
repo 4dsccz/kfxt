@@ -1,20 +1,31 @@
-import { RouteRecordRaw } from 'vue-router';
-import { Layout } from '@/router/constant';
-import { SketchOutlined } from '@vicons/antd';
-import { renderIcon, renderNew } from '@/utils/index';
+import { Layout } from '@/router/constant'
+import { renderIcon } from '@/utils/index'
+import { SketchOutlined } from '@vicons/antd'
+import { RouteRecordRaw } from 'vue-router'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/newversion',
-    name: 'https://www.naiveadmin.com',
+    name: 'NewVersion',
     component: Layout,
     meta: {
-      title: 'Plus 版本',
-      extra: renderNew(),
+      title: '',
       icon: renderIcon(SketchOutlined),
-      sort: 12,
-    },
-  },
-];
+      sort: 12
+    }
+    // children: [
+    //   {
+    //     path: 'index',
+    //     name: 'NewVersionIndex',
+    //     meta: {
+    //       title: '',
+    //       icon: renderNew(),
+    //       affix: true
+    //     },
+    //     component: () => import('@/views/newVersion/index.vue')
+    //   }
+    // ]
+  }
+]
 
-export default routes;
+export default routes

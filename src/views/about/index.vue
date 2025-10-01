@@ -1,101 +1,175 @@
 <template>
-  <div>
-    <div class="n-layout-page-header">
-      <n-card :bordered="false" title="关于">
-        {{ name }} 是一个基于 vue3，vite2，TypeScript
-        的中后台解决方案，它可以帮助你快速搭建企业级中后台项目，相信不管是从新技术使用还是其他方面，都能帮助到你，持续更新中。
-      </n-card>
+  <div class="emr-editor-container">
+    <div class="toolbar">
+      <button @click="loadTemplate">加载病历模板</button>
+      <button @click="getStructuredData">获取结构化数据</button>
+      <button @click="getContent">获取HTML内容</button>
+      <button @click="clearEditor">清空</button>
     </div>
-    <n-card
-      :bordered="false"
-      title="项目信息"
-      class="mt-4 proCard"
-      size="small"
-      :segmented="{ content: true }"
-    >
-      <n-descriptions bordered label-placement="left" class="py-2">
-        <n-descriptions-item label="版本">
-          <n-tag type="info">{{ version }}</n-tag>
-        </n-descriptions-item>
-        <n-descriptions-item label="最后编译时间">
-          <n-tag type="info">{{ lastBuildTime }}</n-tag>
-        </n-descriptions-item>
-        <n-descriptions-item label="文档地址">
-          <div class="flex items-center">
-            <a href="https://docs.naiveadmin.com" class="py-2" target="_blank">查看文档地址</a>
-          </div>
-        </n-descriptions-item>
-        <n-descriptions-item label="预览地址">
-          <div class="flex items-center">
-            <a href="https://v1.naiveadmin.com" class="py-2" target="_blank">查看预览地址</a>
-          </div>
-        </n-descriptions-item>
-        <n-descriptions-item label="Github">
-          <div class="flex items-center">
-            <a href="https://github.com/jekip/naive-ui-admin" class="py-2" target="_blank">
-              查看Github地址
-            </a>
-          </div>
-        </n-descriptions-item>
-        <n-descriptions-item label="QQ交流群">
-          <div class="flex items-center">
-            <a href="https://jq.qq.com/?_wv=1027&k=xib9dU4C" class="py-2" target="_blank">
-              点击链接加入群聊【Naive Admin】
-            </a>
-          </div>
-        </n-descriptions-item>
-      </n-descriptions>
-    </n-card>
 
-    <n-card
-      :bordered="false"
-      title="开发环境依赖"
-      class="mt-4 proCard"
-      size="small"
-      :segmented="{ content: true }"
-    >
-      <n-descriptions bordered label-placement="left" class="py-2">
-        <n-descriptions-item v-for="item in devSchema" :key="item.field" :label="item.field">
-          {{ item.label }}
-        </n-descriptions-item>
-      </n-descriptions>
-    </n-card>
+    <!-- SoDiaoEditor 挂载点 -->
+    <div
+      id="sde-editor"
+      ref="editorRef"
+      style="height: 600px; border: 1px solid #ddd; margin-top: 10px"
+    ></div>
 
-    <n-card
-      :bordered="false"
-      title="生产环境依赖"
-      class="mt-4 proCard"
-      size="small"
-      :segmented="{ content: true }"
-    >
-      <n-descriptions bordered label-placement="left" class="py-2">
-        <n-descriptions-item v-for="item in schema" :key="item.field" :label="item.field">
-          {{ item.label }}
-        </n-descriptions-item>
-      </n-descriptions>
-    </n-card>
+    <!-- 调试输出区 -->
+    <div v-if="debugData" class="debug-output">
+      <h4>调试信息：</h4>
+      <pre>{{ debugData }}</pre>
+    </div>
   </div>
 </template>
 
-<script lang="ts" setup>
-export interface schemaItem {
-  field: string
-  label: string
+<script setup>
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+
+const editorRef = ref(null)
+let sdeEditor = null
+const debugData = ref(null)
+
+// 模拟一个从后端获取的病历模板（实际项目中应为 DOCX 转换后的 HTML）
+const sampleTemplate = `
+  <h2>入院记录</h2>
+  <p>姓名：<span class="sde-field" data-key="patientName" contenteditable="false">张三</span></p>
+  <p>性别：<span class="sde-field" data-key="gender" contenteditable="false">男</span></p>
+  <p>主诉：<span class="sde-field" data-key="chiefComplaint" contenteditable="true">反复咳嗽3天</span></p>
+  <table border="1">
+    <tr><td>体温</td><td><span class="sde-field" data-key="temp" contenteditable="true">36.5</span>℃</td></tr>
+  </table>
+`
+
+// 动态加载 SoDiaoEditor 脚本（避免打包进 bundle）
+const loadSdeScript = () => {
+  return new Promise((resolve, reject) => {
+    if (window.SDEditor) {
+      resolve()
+      return
+    }
+
+    const script = document.createElement('script')
+    script.src = '/sde/sde.editor.js'
+    script.onload = () => resolve()
+    script.onerror = reject
+    document.head.appendChild(script)
+
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = '/sde/sde.editor.css'
+    document.head.appendChild(link)
+  })
 }
 
-const { pkg, lastBuildTime } = __APP_INFO__
-const { dependencies, devDependencies, name, version } = pkg
+// 初始化编辑器
+const initEditor = async () => {
+  await loadSdeScript()
 
-const schema: schemaItem[] = []
-const devSchema: schemaItem[] = []
+  if (!editorRef.value) return
 
-Object.keys(dependencies).forEach(key => {
-  schema.push({ field: key, label: dependencies[key] })
+  // 销毁已有实例（防止重复初始化）
+  if (sdeEditor) {
+    sdeEditor.destroy()
+  }
+
+  // 创建新实例
+  sdeEditor = new window.SDEditor({
+    el: editorRef.value,
+    // 可选配置
+    config: {
+      height: 600,
+      width: '100%',
+      readonly: false,
+      placeholder: '请输入病历内容...',
+      // 如果你的 SDE 支持字段识别，可开启
+      enableField: true
+    }
+  })
+}
+
+// 加载模板
+const loadTemplate = () => {
+  if (!sdeEditor) return
+  sdeEditor.setContent(sampleTemplate)
+}
+
+// 获取结构化数据（需 SDE 支持字段解析）
+const getStructuredData = () => {
+  if (!sdeEditor) return
+
+  // 方法1：如果 SDE 提供 getFields() API
+  if (typeof sdeEditor.getFields === 'function') {
+    const fields = sdeEditor.getFields()
+    debugData.value = JSON.stringify(fields, null, 2)
+    return
+  }
+
+  // 方法2：手动解析（备用）
+  const html = sdeEditor.getContent()
+  const parser = new DOMParser()
+  const doc = parser.parseFromString(html, 'text/html')
+  const fieldEls = doc.querySelectorAll('.sde-field[data-key]')
+  const data = {}
+  fieldEls.forEach(el => {
+    const key = el.getAttribute('data-key')
+    const value = el.textContent || ''
+    data[key] = value
+  })
+  debugData.value = JSON.stringify(data, null, 2)
+}
+
+// 获取原始 HTML
+const getContent = () => {
+  if (!sdeEditor) return
+  const html = sdeEditor.getContent()
+  debugData.value = html
+}
+
+// 清空
+const clearEditor = () => {
+  if (sdeEditor) {
+    sdeEditor.setContent('')
+  }
+}
+
+// 生命周期
+onMounted(() => {
+  initEditor()
 })
 
-Object.keys(devDependencies).forEach(key => {
-  devSchema.push({ field: key, label: devDependencies[key] })
+onBeforeUnmount(() => {
+  if (sdeEditor) {
+    sdeEditor.destroy()
+    sdeEditor = null
+  }
 })
 </script>
 
-<style lang="less" scoped></style>
+<style scoped>
+.emr-editor-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.toolbar {
+  margin-bottom: 10px;
+}
+
+.toolbar button {
+  margin-right: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.debug-output {
+  margin-top: 20px;
+  padding: 10px;
+  background: #f5f5f5;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  font-family: monospace;
+  font-size: 12px;
+}
+</style>

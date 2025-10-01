@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="n-layout-page-header">
-      <n-card :bordered="false" title="菜单权限管理">
-        页面数据为 Mock 示例数据，非真实数据。
-      </n-card>
+      <n-card :bordered="false" title="菜单权限管理">页面数据为 Mock 示例数据，非真实数据。</n-card>
     </div>
     <n-grid class="mt-4" cols="1 s:1 m:1 l:3 xl:3 2xl:3" responsive="screen" :x-gap="12">
       <n-gi span="1">
@@ -76,7 +74,7 @@
               <span>编辑菜单{{ treeItemTitle ? `：${treeItemTitle}` : '' }}</span>
             </n-space>
           </template>
-          <n-alert type="info" closable> 从菜单列表选择一项后，进行编辑</n-alert>
+          <n-alert type="info" closable>从菜单列表选择一项后，进行编辑</n-alert>
           <n-form
             :model="formParams"
             :rules="rules"
@@ -111,9 +109,9 @@
             </n-form-item>
             <n-form-item path="auth" style="margin-left: 100px">
               <n-space>
-                <n-button type="primary" :loading="subLoading" @click="formSubmit"
-                  >保存修改</n-button
-                >
+                <n-button type="primary" :loading="subLoading" @click="formSubmit">
+                  保存修改
+                </n-button>
                 <n-button @click="handleReset">重置</n-button>
                 <n-button @click="handleDel">删除</n-button>
               </n-space>
@@ -126,142 +124,142 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { ref, unref, reactive, onMounted, computed } from 'vue';
-  import { useDialog, useMessage } from 'naive-ui';
-  import { DownOutlined, AlignLeftOutlined, SearchOutlined, FormOutlined } from '@vicons/antd';
-  import { getMenuList } from '@/api/system/menu';
-  import { getTreeItem } from '@/utils';
-  import CreateDrawer from './CreateDrawer.vue';
-  import type { ListDate } from '@/api/system/menu';
+import type { ListDate } from '@/api/system/menu'
+import { getMenuList } from '@/api/system/menu'
+import { getTreeItem } from '@/utils'
+import { AlignLeftOutlined, DownOutlined, FormOutlined, SearchOutlined } from '@vicons/antd'
+import { useDialog, useMessage } from 'naive-ui'
+import { computed, onMounted, reactive, ref, unref } from 'vue'
+import CreateDrawer from './CreateDrawer.vue'
 
-  const rules = {
-    label: {
-      required: true,
-      message: '请输入标题',
-      trigger: 'blur',
-    },
-    path: {
-      required: true,
-      message: '请输入路径',
-      trigger: 'blur',
-    },
-  };
-
-  const formRef: any = ref(null);
-  const createDrawerRef = ref();
-  const message = useMessage();
-  const dialog = useDialog();
-
-  let treeItemKey = ref([]);
-
-  let expandedKeys = ref([]);
-
-  const treeData = ref<ListDate[]>([]);
-
-  const loading = ref(true);
-  const subLoading = ref(false);
-  const isEditMenu = ref(false);
-  const treeItemTitle = ref('');
-  const pattern = ref('');
-  const drawerTitle = ref('');
-
-  const isAddSon = computed(() => {
-    return !treeItemKey.value.length;
-  });
-
-  const addMenuOptions = ref([
-    {
-      label: '添加顶级菜单',
-      key: 'home',
-      disabled: false,
-    },
-    {
-      label: '添加子菜单',
-      key: 'son',
-      disabled: isAddSon,
-    },
-  ]);
-
-  const formParams = reactive({
-    type: 1,
-    label: '',
-    subtitle: '',
-    path: '',
-    auth: '',
-    openType: 1,
-  });
-
-  function selectAddMenu(key: string) {
-    drawerTitle.value = key === 'home' ? '添加顶栏菜单' : `添加子菜单：${treeItemTitle.value}`;
-    openCreateDrawer();
+const rules = {
+  label: {
+    required: true,
+    message: '请输入标题',
+    trigger: 'blur'
+  },
+  path: {
+    required: true,
+    message: '请输入路径',
+    trigger: 'blur'
   }
+}
 
-  function openCreateDrawer() {
-    const { openDrawer } = createDrawerRef.value;
-    openDrawer();
+const formRef: any = ref(null)
+const createDrawerRef = ref()
+const message = useMessage()
+const dialog = useDialog()
+
+let treeItemKey = ref([])
+
+let expandedKeys = ref([])
+
+const treeData = ref<ListDate[]>([])
+
+const loading = ref(true)
+const subLoading = ref(false)
+const isEditMenu = ref(false)
+const treeItemTitle = ref('')
+const pattern = ref('')
+const drawerTitle = ref('')
+
+const isAddSon = computed(() => {
+  return !treeItemKey.value.length
+})
+
+const addMenuOptions = ref([
+  {
+    label: '添加顶级菜单',
+    key: 'home',
+    disabled: false
+  },
+  {
+    label: '添加子菜单',
+    key: 'son',
+    disabled: isAddSon
   }
+])
 
-  function selectedTree(keys) {
-    if (keys.length) {
-      const treeItem = getTreeItem(unref(treeData), keys[0]);
-      treeItemKey.value = keys;
-      treeItemTitle.value = treeItem.label;
-      Object.assign(formParams, treeItem);
-      isEditMenu.value = true;
-    } else {
-      isEditMenu.value = false;
-      treeItemKey.value = [];
-      treeItemTitle.value = '';
+const formParams = reactive({
+  type: 1,
+  label: '',
+  subtitle: '',
+  path: '',
+  auth: '',
+  openType: 1
+})
+
+function selectAddMenu(key: string) {
+  drawerTitle.value = key === 'home' ? '添加顶栏菜单' : `添加子菜单：${treeItemTitle.value}`
+  openCreateDrawer()
+}
+
+function openCreateDrawer() {
+  const { openDrawer } = createDrawerRef.value
+  openDrawer()
+}
+
+function selectedTree(keys) {
+  if (keys.length) {
+    const treeItem = getTreeItem(unref(treeData), keys[0])
+    treeItemKey.value = keys
+    treeItemTitle.value = treeItem.label
+    Object.assign(formParams, treeItem)
+    isEditMenu.value = true
+  } else {
+    isEditMenu.value = false
+    treeItemKey.value = []
+    treeItemTitle.value = ''
+  }
+}
+
+function handleDel() {
+  dialog.info({
+    title: '提示',
+    content: `您确定想删除此权限吗?`,
+    positiveText: '确定',
+    negativeText: '取消',
+    onPositiveClick: () => {
+      message.success('删除成功')
+    },
+    onNegativeClick: () => {
+      message.error('已取消')
     }
-  }
+  })
+}
 
-  function handleDel() {
-    dialog.info({
-      title: '提示',
-      content: `您确定想删除此权限吗?`,
-      positiveText: '确定',
-      negativeText: '取消',
-      onPositiveClick: () => {
-        message.success('删除成功');
-      },
-      onNegativeClick: () => {
-        message.error('已取消');
-      },
-    });
-  }
+function handleReset() {
+  const treeItem = getTreeItem(unref(treeData), treeItemKey.value[0])
+  Object.assign(formParams, treeItem)
+}
 
-  function handleReset() {
-    const treeItem = getTreeItem(unref(treeData), treeItemKey.value[0]);
-    Object.assign(formParams, treeItem);
-  }
-
-  function formSubmit() {
-    formRef.value.validate((errors: boolean) => {
-      if (!errors) {
-        message.error('抱歉，您没有该权限');
-      } else {
-        message.error('请填写完整信息');
-      }
-    });
-  }
-
-  function packHandle() {
-    if (expandedKeys.value.length) {
-      expandedKeys.value = [];
+function formSubmit() {
+  formRef.value.validate((errors: boolean) => {
+    if (!errors) {
+      message.error('抱歉，您没有该权限')
     } else {
-      expandedKeys.value = unref(treeData).map((item: any) => item.key as string) as [];
+      message.error('请填写完整信息')
     }
-  }
+  })
+}
 
-  onMounted(async () => {
-    const treeMenuList = await getMenuList();
-    const keys = treeMenuList.list.map((item) => item.key);
-    Object.assign(formParams, keys);
-    treeData.value = treeMenuList.list;
-    loading.value = false;
-  });
-
-  function onExpandedKeys(keys) {
-    expandedKeys.value = keys;
+function packHandle() {
+  if (expandedKeys.value.length) {
+    expandedKeys.value = []
+  } else {
+    expandedKeys.value = unref(treeData).map((item: any) => item.key as string) as []
   }
+}
+
+onMounted(async () => {
+  const treeMenuList = await getMenuList()
+  const keys = treeMenuList.list.map(item => item.key)
+  Object.assign(formParams, keys)
+  treeData.value = treeMenuList.list
+  loading.value = false
+})
+
+function onExpandedKeys(keys) {
+  expandedKeys.value = keys
+}
 </script>

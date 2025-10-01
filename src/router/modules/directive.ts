@@ -1,7 +1,7 @@
-import { RouteRecordRaw } from 'vue-router';
-import { Layout } from '@/router/constant';
-import { BorderOuterOutlined } from '@vicons/antd';
-import { renderIcon } from '@/utils/index';
+import { Layout } from '@/router/constant'
+import { renderIcon } from '@/utils/index'
+import { BorderOuterOutlined } from '@vicons/antd'
+import { RouteRecordRaw } from 'vue-router'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -12,7 +12,7 @@ const routes: Array<RouteRecordRaw> = [
       sort: 9,
       isRoot: true,
       activeMenu: 'directive_index',
-      icon: renderIcon(BorderOuterOutlined),
+      icon: renderIcon(BorderOuterOutlined)
     },
     children: [
       {
@@ -20,12 +20,12 @@ const routes: Array<RouteRecordRaw> = [
         name: `directive_index`,
         meta: {
           title: '指令示例',
-          activeMenu: 'directive_index',
+          activeMenu: 'directive_index'
         },
-        component: () => import('@/views/directive/index.vue'),
-      },
-    ],
-  },
-];
+        component: () => import('@/views/directive/index.vue')
+      }
+    ]
+  }
+]
 
-export default routes;
+export default routes

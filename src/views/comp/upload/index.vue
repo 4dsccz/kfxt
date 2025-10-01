@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="n-layout-page-header">
-      <n-card :bordered="false" title="上传图片"> 上传图片，用于向用户收集图片信息 </n-card>
+      <n-card :bordered="false" title="上传图片">上传图片，用于向用户收集图片信息</n-card>
     </div>
     <n-card :bordered="false" class="mt-4 proCard">
       <n-grid cols="2 s:1 m:3 l:3 xl:3 2xl:3" responsive="screen">
@@ -48,64 +48,64 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, unref, reactive } from 'vue';
-  import { useMessage } from 'naive-ui';
-  import { BasicUpload } from '@/components/Upload';
-  import { useGlobSetting } from '@/hooks/setting';
+import { BasicUpload } from '@/components/Upload'
+import { useGlobSetting } from '@/hooks/setting'
+import { useMessage } from 'naive-ui'
+import { reactive, ref, unref } from 'vue'
 
-  const globSetting = useGlobSetting();
+const globSetting = useGlobSetting()
 
-  const rules = {
-    name: {
-      required: true,
-      message: '请输入预约姓名',
-      trigger: 'blur',
-    },
-    remark: {
-      required: true,
-      message: '请输入预约备注',
-      trigger: 'blur',
-    },
-    images: {
-      required: true,
-      type: 'array',
-      message: '请上传病例图片',
-      trigger: 'change',
-    },
-  };
-
-  const formRef: any = ref(null);
-  const message = useMessage();
-  const { uploadUrl } = globSetting;
-
-  const formValue = reactive({
-    name: '',
-    mobile: '',
-    //图片列表 通常查看和编辑使用 绝对路径 | 相对路径都可以
-    images: ['https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'],
-  });
-
-  const uploadHeaders = reactive({
-    platform: 'miniPrograms',
-    timestamp: new Date().getTime(),
-    token: 'Q6fFCuhc1vkKn5JNFWaCLf6gRAc5n0LQHd08dSnG4qo=',
-  });
-
-  function formSubmit() {
-    formRef.value.validate((errors) => {
-      if (!errors) {
-        message.success('验证成功');
-      } else {
-        message.error('验证失败，请填写完整信息');
-      }
-    });
+const rules = {
+  name: {
+    required: true,
+    message: '请输入预约姓名',
+    trigger: 'blur'
+  },
+  remark: {
+    required: true,
+    message: '请输入预约备注',
+    trigger: 'blur'
+  },
+  images: {
+    required: true,
+    type: 'array',
+    message: '请上传病例图片',
+    trigger: 'change'
   }
+}
 
-  function resetForm() {
-    formRef.value.restoreValidation();
-  }
+const formRef: any = ref(null)
+const message = useMessage()
+const { uploadUrl } = globSetting
 
-  function uploadChange(list: string[]) {
-    formValue.images = unref(list);
-  }
+const formValue = reactive({
+  name: '',
+  mobile: '',
+  //图片列表 通常查看和编辑使用 绝对路径 | 相对路径都可以
+  images: ['https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png']
+})
+
+const uploadHeaders = reactive({
+  platform: 'miniPrograms',
+  timestamp: new Date().getTime(),
+  token: 'Q6fFCuhc1vkKn5JNFWaCLf6gRAc5n0LQHd08dSnG4qo='
+})
+
+function formSubmit() {
+  formRef.value.validate(errors => {
+    if (!errors) {
+      message.success('验证成功')
+    } else {
+      message.error('验证失败，请填写完整信息')
+    }
+  })
+}
+
+function resetForm() {
+  formRef.value.restoreValidation()
+}
+
+function uploadChange(list: string[]) {
+  formValue.images = unref(list)
+}
 </script>

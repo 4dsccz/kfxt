@@ -1,9 +1,9 @@
-import { RouteRecordRaw } from 'vue-router';
-import { Layout } from '@/router/constant';
-import { DesktopOutline } from '@vicons/ionicons5';
-import { renderIcon } from '@/utils/index';
+import { Layout } from '@/router/constant'
+import { renderIcon } from '@/utils/index'
+import { DesktopOutline } from '@vicons/ionicons5'
+import { RouteRecordRaw } from 'vue-router'
 
-const IFrame = () => import('@/views/iframe/index.vue');
+const IFrame = () => import('@/views/iframe/index.vue')
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -14,7 +14,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '外部页面',
       sort: 8,
-      icon: renderIcon(DesktopOutline),
+      icon: renderIcon(DesktopOutline)
     },
     children: [
       {
@@ -22,30 +22,30 @@ const routes: Array<RouteRecordRaw> = [
         name: 'naive-admin',
         meta: {
           title: 'NaiveAdmin',
-          frameSrc: 'https://www.naiveadmin.com',
+          frameSrc: 'https://www.naiveadmin.com'
         },
-        component: IFrame,
+        component: IFrame
       },
       {
         path: 'docs',
         name: 'frame-docs',
         meta: {
           title: '项目文档(内嵌)',
-          frameSrc: 'https://jekip.github.io/docs',
+          frameSrc: 'https://jekip.github.io/docs'
         },
-        component: IFrame,
+        component: IFrame
       },
       {
         path: 'naive',
         name: 'frame-naive',
         meta: {
           title: 'NaiveUi(内嵌)',
-          frameSrc: 'https://www.naiveui.com',
+          frameSrc: 'https://www.naiveui.com'
         },
-        component: IFrame,
-      },
-    ],
-  },
-];
+        component: IFrame
+      }
+    ]
+  }
+]
 
-export default routes;
+export default routes

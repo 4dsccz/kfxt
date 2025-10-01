@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="n-layout-page-header">
-      <n-card :bordered="false" title="基础详情"> 基础详情，有时也用于显示只读信息。 </n-card>
+      <n-card :bordered="false" title="基础详情">基础详情，有时也用于显示只读信息。</n-card>
     </div>
     <n-card :bordered="false" class="mt-4 proCard" size="small" :segmented="{ content: true }">
       <n-descriptions label-placement="left" class="py-2">
@@ -14,7 +14,7 @@
         <n-descriptions-item label="付款账户">NaiveUiAdmin@163.com</n-descriptions-item>
         <n-descriptions-item label="转账金额">￥1980.00</n-descriptions-item>
         <n-descriptions-item label="状态">
-          <n-tag type="success"> 已到账</n-tag>
+          <n-tag type="success">已到账</n-tag>
         </n-descriptions-item>
       </n-descriptions>
     </n-card>
