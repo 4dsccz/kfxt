@@ -11,6 +11,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Layout,
     meta: {
       title: '列表页面',
+      key: 'list',
       icon: renderIcon(TableOutlined),
       sort: 2
     },
@@ -19,7 +20,8 @@ const routes: Array<RouteRecordRaw> = [
         path: 'basic-list',
         name: 'basic-list',
         meta: {
-          title: '基础列表'
+          title: '基础列表',
+          hidden: true
         },
         component: () => import('@/views/list/basicList/index.vue')
       },
@@ -27,9 +29,19 @@ const routes: Array<RouteRecordRaw> = [
         path: 'EvaluationItems',
         name: 'EvaluationItems',
         meta: {
-          title: '评定项目维护'
+          title: '评定项目维护',
+          key: 'evaluation-items'
         },
         component: () => import('@/views/list/EvaluationItems.vue')
+      },
+      {
+        path: 'UserInfo',
+        name: 'UserInfo',
+        meta: {
+          title: '用户信息管理',
+          key: 'user-info'
+        },
+        component: () => import('@/views/list/UserInfo.vue')
       },
       {
         path: 'basic-info/:id?',

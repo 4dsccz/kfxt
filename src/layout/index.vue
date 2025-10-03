@@ -16,7 +16,7 @@
       :inverted="inverted"
       class="layout-sider"
     >
-      <Logo :collapsed="collapsed" />
+      <!-- <Logo :collapsed="collapsed" /> -->
       <AsideMenu v-model:collapsed="collapsed" v-model:location="getMenuLocation" />
     </n-layout-sider>
 
@@ -34,7 +34,7 @@
         :inverted="inverted"
         class="layout-sider"
       >
-        <Logo :collapsed="collapsed" />
+        <!-- <Logo :collapsed="collapsed" /> -->
         <AsideMenu v-model:location="getMenuLocation" />
       </n-layout-sider>
     </n-drawer>
@@ -84,7 +84,6 @@ import { useProjectSettingStore } from '@/store/modules/projectSetting'
 import { computed, onMounted, ref, unref } from 'vue'
 import { useRoute } from 'vue-router'
 import { PageHeader } from './components/Header'
-import { Logo } from './components/Logo'
 import { MainView } from './components/Main'
 import { AsideMenu } from './components/Menu'
 import { TabsView } from './components/TagsView'

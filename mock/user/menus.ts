@@ -1,5 +1,5 @@
-import { defineMock } from '@alova/mock';
-import { resultSuccess } from '../_util';
+import { defineMock } from '@alova/mock'
+import { resultSuccess } from '../_util'
 
 const menusList = [
   {
@@ -9,7 +9,7 @@ const menusList = [
     redirect: '/dashboard/console',
     meta: {
       icon: 'DashboardOutlined',
-      title: 'Dashboard',
+      title: 'Dashboard'
     },
     children: [
       {
@@ -17,16 +17,16 @@ const menusList = [
         name: 'dashboard_console',
         component: '/dashboard/console/console',
         meta: {
-          title: '主控台',
-        },
+          title: '主控台'
+        }
       },
       {
         path: 'monitor',
         name: 'dashboard_monitor',
         component: '/dashboard/monitor/monitor',
         meta: {
-          title: '监控页',
-        },
+          title: '监控页'
+        }
       },
       {
         path: 'workplace',
@@ -34,13 +34,13 @@ const menusList = [
         component: '/dashboard/workplace/workplace',
         meta: {
           hidden: true,
-          title: '工作台',
-        },
-      },
-    ],
-  },
-];
+          title: '工作台'
+        }
+      }
+    ]
+  }
+]
 
 export default defineMock({
-  '/api/menus': () => resultSuccess(menusList),
-});
+  '/api/menus': () => resultSuccess(menusList)
+})

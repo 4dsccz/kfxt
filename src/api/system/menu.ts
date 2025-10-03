@@ -1,20 +1,21 @@
-import { Alova } from '@/utils/http/alova/index';
+import { Alova } from '@/utils/http/alova/index'
 export interface ListDate {
-  label: string;
-  key: string;
-  type: number;
-  subtitle: string;
-  openType: number;
-  auth: string;
-  path: string;
-  children?: ListDate[];
+  id: number
+  rcode: string
+  rname: string
+  note: string
+  rtype: string
+  creator: string
+  createdate: string
+  isvalid: number
+  children?: ListDate[]
 }
 
 /**
  * @description: 根据用户id获取用户菜单
  */
 export function adminMenus() {
-  return Alova.Get('/menus');
+  return Alova.Get('/menus')
 }
 
 /**
@@ -23,6 +24,6 @@ export function adminMenus() {
  */
 export function getMenuList(params?) {
   return Alova.Get<{ list: ListDate[] }>('/menu/list', {
-    params,
-  });
+    params
+  })
 }

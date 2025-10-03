@@ -1,19 +1,19 @@
-import { createAlova } from 'alova';
-import VueHook from 'alova/vue';
-import adapterFetch from 'alova/fetch';
-import { createAlovaMockAdapter } from '@alova/mock';
-import { isString } from 'lodash-es';
-import mocks from './mocks';
-import { useUser } from '@/store/modules/user';
-import { storage } from '@/utils/Storage';
-import { useGlobSetting, useLocalSetting } from '@/hooks/setting';
-import { PageEnum } from '@/enums/pageEnum';
-import { ResultEnum } from '@/enums/httpEnum';
-import { isUrl } from '@/utils';
+import { ResultEnum } from '@/enums/httpEnum'
+import { PageEnum } from '@/enums/pageEnum'
+import { useGlobSetting, useLocalSetting } from '@/hooks/setting'
+import { useUser } from '@/store/modules/user'
+import { isUrl } from '@/utils'
+import { storage } from '@/utils/Storage'
+import { createAlovaMockAdapter } from '@alova/mock'
+import { createAlova } from 'alova'
+import adapterFetch from 'alova/fetch'
+import VueHook from 'alova/vue'
+import { isString } from 'lodash-es'
+import mocks from './mocks'
 
-const { apiUrl, urlPrefix } = useGlobSetting();
+const { apiUrl, urlPrefix } = useGlobSetting()
 
-const { useMock, loggerMock } = useLocalSetting();
+const { useMock, loggerMock } = useLocalSetting()
 
 const mockAdapter = createAlovaMockAdapter([...mocks], {
   // 全局控制是否启用mock接口，默认为true
@@ -31,10 +31,10 @@ const mockAdapter = createAlovaMockAdapter([...mocks], {
   // },
   mockRequestLogger: loggerMock,
   onMockError(error, currentMethod) {
-    console.error('🚀 ~ onMockError ~ currentMethod:', currentMethod);
-    console.error('🚀 ~ onMockError ~ error:', error);
-  },
-});
+    console.error('🚀 ~ onMockError ~ currentMethod:', currentMethod)
+    console.error('🚀 ~ onMockError ~ error:', error)
+  }
+})
 
 export const Alova = createAlova({
   baseURL: apiUrl,
@@ -57,46 +57,46 @@ export const Alova = createAlova({
   cacheLogger: process.env.NODE_ENV === 'development',
   requestAdapter: mockAdapter,
   beforeRequest(method) {
-    const userStore = useUser();
-    const token = userStore.getToken;
+    const userStore = useUser()
+    const token = userStore.getToken
     // 添加 token 到请求头
     if (!method.meta?.ignoreToken && token) {
-      method.config.headers['token'] = token;
+      method.config.headers['token'] = token
     }
     // 处理 api 请求前缀
-    const isUrlStr = isUrl(method.url as string);
+    const isUrlStr = isUrl(method.url as string)
     if (!isUrlStr && urlPrefix) {
-      method.url = `${urlPrefix}${method.url}`;
+      method.url = `${urlPrefix}${method.url}`
     }
     if (!isUrlStr && apiUrl && isString(apiUrl)) {
-      method.url = `${apiUrl}${method.url}`;
+      method.url = `${apiUrl}${method.url}`
     }
   },
   responded: {
     onSuccess: async (response, method) => {
-      const res = (response.json && (await response.json())) || response.body;
+      const res = (response.json && (await response.json())) || response.body
 
       // 是否返回原生响应头 比如：需要获取响应头时使用该属性
       if (method.meta?.isReturnNativeResponse) {
-        return res;
+        return res
       }
       // 请根据自身情况修改数据结构
-      const { message, code, result } = res;
+      const { message, code, result } = res
 
       // 不进行任何处理，直接返回
       // 用于需要直接获取 code、result、 message 这些信息时开启
       if (method.meta?.isTransformResponse === false) {
-        return res.data;
+        return res.data
       }
 
       // @ts-ignore
-      const Message = window.$message;
+      const Message = window.$message
       // @ts-ignore
-      const Modal = window.$dialog;
+      const Modal = window.$dialog
 
-      const LoginPath = PageEnum.BASE_LOGIN;
+      const LoginPath = PageEnum.BASE_LOGIN
       if (ResultEnum.SUCCESS === code) {
-        return result;
+        return result
       }
       // 需要登录
       if (code === 912) {
@@ -107,18 +107,18 @@ export const Alova = createAlova({
           closable: false,
           maskClosable: false,
           onOk: async () => {
-            storage.clear();
-            window.location.href = LoginPath;
-          },
-        });
+            storage.clear()
+            window.location.href = LoginPath
+          }
+        })
       } else {
         // 可按需处理错误 一般情况下不是 912 错误，不一定需要弹出 message
-        Message?.error(message);
-        throw new Error(message);
+        Message?.error(message)
+        throw new Error(message)
       }
-    },
-  },
-});
+    }
+  }
+})
 
 // 项目，多个不同 api 地址，可导出多个实例
 // export const AlovaTwo = createAlova({

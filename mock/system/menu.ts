@@ -1,86 +1,36 @@
-import { defineMock } from '@alova/mock';
-import { resultSuccess } from '../_util';
-import type { ListDate } from '@/api/system/menu';
+// @/mock/modules/menu.ts
+import type { ListDate } from '@/api/system/menu'
+import { menuRoutes } from '@/router' // ✅ 直接导入
+import { defineMock } from '@alova/mock'
+import { resultSuccess } from '../_util'
 
-const menuList = () => {
-  const result: ListDate[] = [
-    {
-      label: 'Dashboard',
-      key: 'dashboard',
-      type: 1,
-      subtitle: 'dashboard',
-      openType: 1,
-      auth: 'dashboard',
-      path: '/dashboard',
-      children: [
-        {
-          label: '主控台',
-          key: 'console',
-          type: 1,
-          subtitle: 'console',
-          openType: 1,
-          auth: 'console',
-          path: '/dashboard/console',
-        },
-        {
-          label: '工作台',
-          key: 'workplace',
-          type: 1,
-          subtitle: 'workplace',
-          openType: 1,
-          auth: 'workplace',
-          path: '/dashboard/workplace',
-        },
-      ],
-    },
-    {
-      label: '表单管理',
-      key: 'form',
-      type: 1,
-      subtitle: 'form',
-      openType: 1,
-      auth: 'form',
-      path: '/form',
-      children: [
-        {
-          label: '基础表单',
-          key: 'basic-form',
-          type: 1,
-          subtitle: 'basic-form',
-          openType: 1,
-          auth: 'basic-form',
-          path: '/form/basic-form',
-        },
-        {
-          label: '分步表单',
-          key: 'step-form',
-          type: 1,
-          subtitle: 'step-form',
-          openType: 1,
-          auth: 'step-form',
-          path: '/form/step-form',
-        },
-        {
-          label: '表单详情',
-          key: 'detail',
-          type: 1,
-          subtitle: 'detail',
-          openType: 1,
-          auth: 'detail',
-          path: '/form/detail',
-        },
-      ],
-    },
-  ];
+function transformRouteToMenu(routes): ListDate[] {
+  return routes
+    .filter(route => route.meta?.key) // 确保有 key
+    .map(route => {
+      const menu: ListDate = {
+        label: route.meta.title as string,
+        key: route.meta.key as string,
+        type: 1,
+        subtitle: route.meta.key as string,
+        openType: 1,
+        auth: (route.meta.auth || route.meta.key) as string,
+        path: route.path
+      }
 
-  return result;
-};
+      if (route.children?.length) {
+        menu.children = transformRouteToMenu(route.children)
+      }
+
+      return menu
+    })
+}
+
+const menuList = transformRouteToMenu(menuRoutes)
+console.log(menuList)
 
 export default defineMock({
   '/api/menu/list': () => {
-    const list = menuList();
-    return resultSuccess({
-      list,
-    });
-  },
-});
+    return resultSuccess({ list: menuList })
+  }
+})

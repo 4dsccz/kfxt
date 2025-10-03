@@ -25,31 +25,31 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { reactive, ref } from 'vue';
-import BasicSetting from './BasicSetting.vue';
-import SafetySetting from './SafetySetting.vue';
+import { reactive } from 'vue'
+import BasicSetting from './BasicSetting.vue'
+import SafetySetting from './SafetySetting.vue'
 
 const typeTabList = [
   {
     name: '基本设置',
     desc: '个人账户信息设置',
-    key: 1,
+    key: 1
   },
   {
     name: '安全设置',
-    desc: '密码，邮箱等设置',
-    key: 2,
-  },
-];
+    desc: '密码等设置',
+    key: 2
+  }
+]
 
 const state = reactive({
   type: 1,
-  typeTitle: '基本设置',
-});
+  typeTitle: '基本设置'
+})
 
 function switchType(e) {
-  state.type = e.key;
-  state.typeTitle = e.name;
+  state.type = e.key
+  state.typeTitle = e.name
 }
 </script>
 <style lang="less" scoped>

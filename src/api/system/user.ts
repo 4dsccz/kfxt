@@ -1,4 +1,4 @@
-import { Alova } from '@/utils/http/alova/index';
+import { Alova } from '@/utils/http/alova/index'
 
 /**
  * @description: 获取用户信息
@@ -6,9 +6,9 @@ import { Alova } from '@/utils/http/alova/index';
 export function getUserInfo() {
   return Alova.Get<InResult>('/admin_info', {
     meta: {
-      isReturnNativeResponse: true,
-    },
-  });
+      isReturnNativeResponse: true
+    }
+  })
 }
 
 /**
@@ -18,21 +18,21 @@ export function login(params) {
   return Alova.Post<InResult>(
     '/login',
     {
-      params,
+      params
     },
     {
       meta: {
-        isReturnNativeResponse: true,
-      },
+        isReturnNativeResponse: true
+      }
     }
-  );
+  )
 }
 
 /**
  * @description: 用户修改密码
  */
 export function changePassword(params, uid) {
-  return Alova.Post(`/user/u${uid}/changepw`, { params });
+  return Alova.Post(`/user/u${uid}/changepw`, { params })
 }
 
 /**
@@ -40,6 +40,6 @@ export function changePassword(params, uid) {
  */
 export function logout(params) {
   return Alova.Post('/login/logout', {
-    params,
-  });
+    params
+  })
 }

@@ -11,23 +11,25 @@ const routes: Array<RouteRecordRaw> = [
     component: Layout,
     meta: {
       title: '系统设置',
+      key: 'system',
       icon: renderIcon(OptionsSharp),
       sort: 1
     },
     children: [
-      {
-        path: 'menu',
-        name: 'system_menu',
-        meta: {
-          title: '菜单权限'
-        },
-        component: () => import('@/views/system/menu/menu.vue')
-      },
+      // {
+      //   path: 'menu',
+      //   name: 'system_menu',
+      //   meta: {
+      //     title: '菜单权限'
+      //   },
+      //   component: () => import('@/views/system/menu/menu.vue')
+      // },
       {
         path: 'role',
         name: 'system_role',
         meta: {
-          title: '角色权限'
+          title: '角色权限',
+          key: 'role'
         },
         component: () => import('@/views/system/role/role.vue')
       }

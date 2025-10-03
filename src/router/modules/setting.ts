@@ -11,6 +11,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Layout,
     meta: {
       title: '设置页面',
+      key: 'setting',
       icon: renderIcon(SettingOutlined),
       sort: 5
     },
@@ -19,18 +20,19 @@ const routes: Array<RouteRecordRaw> = [
         path: 'account',
         name: 'setting-account',
         meta: {
-          title: '个人设置'
+          title: '个人设置',
+          key: 'setting-account'
         },
         component: () => import('@/views/setting/account/account.vue')
-      },
-      {
-        path: 'system',
-        name: 'setting-system',
-        meta: {
-          title: '系统设置'
-        },
-        component: () => import('@/views/setting/system/system.vue')
       }
+      // {
+      //   path: 'system',
+      //   name: 'setting-system',
+      //   meta: {
+      //     title: '系统设置'
+      //   },
+      //   component: () => import('@/views/setting/system/system.vue')
+      // }
     ]
   }
 ]

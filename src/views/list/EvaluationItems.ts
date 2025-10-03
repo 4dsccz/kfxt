@@ -18,12 +18,6 @@ const validMap = {
   0: '无效'
 }
 
-// 输入模式映射
-const inputModeMap = {
-  sel: '下拉选择',
-  input: '文本输入'
-}
-
 // Naive UI 标签类型映射
 const getValidTagType = (isValid: number) => (isValid === 1 ? 'success' : 'error')
 

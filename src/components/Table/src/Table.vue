@@ -188,8 +188,52 @@ const getTableSize = computed(() => tableSize.value)
 
 //组装表格信息
 const getBindValues = computed(() => {
-  const tableData = unref(getDataSourceRef)
-  const maxHeight = tableData.length ? `${unref(deviceHeight)}px` : 'auto'
+  // const tableData = unref(getDataSourceRef)
+  const tableData = [
+    {
+      id: 1,
+      rcode: 'NURSE',
+      rname: '护士',
+      rtype: '护理类',
+      isvalid: 1,
+      children: [
+        {
+          id: 2,
+          rcode: 'NURSE_ASSISTANT',
+          rname: '副主任护士',
+          rtype: '护理类',
+          isvalid: 1,
+          children: []
+        },
+        {
+          id: 3,
+          rcode: 'NURSE_MAIN',
+          rname: '主管护士',
+          rtype: '护理类',
+          isvalid: 1,
+          children: []
+        }
+      ]
+    },
+    {
+      id: 4,
+      rcode: 'DOCTOR',
+      rname: '康复医生',
+      rtype: '医疗类',
+      isvalid: 1,
+      children: [
+        {
+          id: 5,
+          rcode: 'REHAB_DOCTOR',
+          rname: '康复治疗师',
+          rtype: '医疗类',
+          isvalid: 1,
+          children: []
+        }
+      ]
+    }
+  ]
+  const maxHeight = tableData.values.length ? `${unref(deviceHeight)}px` : 'auto'
   return {
     ...unref(getProps),
     loading: unref(getLoading),
@@ -197,7 +241,7 @@ const getBindValues = computed(() => {
     rowKey: unref(getRowKey),
     data: tableData,
     size: unref(getTableSize),
-    remote: true,
+    remote: false,
     'max-height': maxHeight,
     title: '' // 重置为空 避免绑定到 table 上面
   }

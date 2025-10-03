@@ -56,4 +56,8 @@ export function setupRouter(app: App) {
   createRouterGuards(router)
 }
 
+export const menuRoutes = routeModuleList
+  .filter(route => route.meta?.title && !route.meta?.hidden)
+  .map(route => ({ ...route })) // 浅拷贝避免污染
+
 export default router
