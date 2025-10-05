@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="n-layout-page-header">
-      <n-card :bordered="false" title="基础表单">
-        表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。表单域标签也可支持响应式。
+      <n-card :bordered="false" title="新增/修改通用格式">
+        目前的示例，主要演示表单提交数据，以及表单验证。
       </n-card>
     </div>
     <n-card :bordered="false" class="mt-4 proCard">
@@ -16,47 +16,44 @@
             ref="formRef"
             class="py-8"
           >
-            <n-form-item label="预约姓名" path="name">
-              <n-input v-model:value="formValue.name" placeholder="输入姓名" />
+            <n-form-item label="文本框示例" path="name">
+              <n-input v-model:value="formValue.name" placeholder="输入文本" />
             </n-form-item>
-            <n-form-item label="预约号码" path="mobile">
-              <n-input placeholder="电话号码" v-model:value="formValue.mobile" />
-            </n-form-item>
-            <n-form-item label="预约时间" path="datetime">
+            <n-form-item label="时间框示例" path="datetime">
               <n-date-picker type="datetime" v-model:value="formValue.datetime" />
             </n-form-item>
-            <n-form-item label="预约医生" path="doctor">
+            <n-form-item label="下拉单选框示例" path="doctor">
               <n-select
-                placeholder="请选择预约医生"
+                placeholder="请选择单选框"
                 :options="doctorList"
                 v-model:value="formValue.doctor"
               />
             </n-form-item>
-            <n-form-item label="预约事项" path="matter">
+            <n-form-item label="下拉多选框示例" path="matter">
               <n-select
-                placeholder="请选择预约事项"
+                placeholder="请选择多选框"
                 :options="matterList"
                 v-model:value="formValue.matter"
                 multiple
               />
             </n-form-item>
-            <n-form-item label="性别" path="sex">
+            <n-form-item label="单选框示例" path="sex">
               <n-radio-group v-model:value="formValue.sex" name="sex">
                 <n-space>
-                  <n-radio :value="1">男</n-radio>
-                  <n-radio :value="2">女</n-radio>
+                  <n-radio :value="1">1</n-radio>
+                  <n-radio :value="2">2</n-radio>
                 </n-space>
               </n-radio-group>
             </n-form-item>
-            <n-form-item label="预约备注" path="remark">
+            <n-form-item label="长文本示例" path="remark">
               <n-input
                 v-model:value="formValue.remark"
                 type="textarea"
-                placeholder="请输入预约备注"
+                placeholder="请输入长文本"
               />
             </n-form-item>
-            <n-form-item label="图片" path="img">
-              <BasicUpload
+            <n-form-item label="上传图片示例" path="img">
+              <BasicImageUpload
                 :action="`${uploadUrl}/v1.0/files`"
                 :headers="uploadHeaders"
                 :data="{ type: 0 }"
@@ -66,6 +63,22 @@
                 @upload-change="uploadChange"
                 v-model:value="uploadList"
                 helpText="单个文件不超过20MB，最多只能上传10个文件"
+              />
+            </n-form-item>
+            <!-- 文件上传 -->
+            <n-form-item label="上传附件示例" path="attachment">
+              <BasicFileUpload
+                :action="`${uploadUrl}/v1.0/files`"
+                :headers="uploadHeaders"
+                :data="{
+                  type: 1
+                }"
+                name="files"
+                :accept="'*'"
+                :list-type="'text'"
+                @upload-change="attachmentUploadChange"
+                v-model:value="attachmentList"
+                helpText="支持PDF、Word等文档，单个文件不超过20MB，最多10个"
               />
             </n-form-item>
             <div style="margin-left: 80px">
@@ -82,7 +95,7 @@
 </template>
 
 <script lang="ts" setup>
-import { BasicUpload } from '@/components/Upload'
+import { BasicFileUpload, BasicImageUpload } from '@/components/Upload'
 import { useGlobSetting } from '@/hooks/setting'
 import { useMessage } from 'naive-ui'
 import { reactive, ref, unref } from 'vue'

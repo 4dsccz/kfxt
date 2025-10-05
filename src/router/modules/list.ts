@@ -44,14 +44,13 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/list/UserInfo.vue')
       },
       {
-        path: 'basic-info/:id?',
-        name: 'basic-info',
+        path: 'basic-info',
+        name: 'basic-info-type',
         meta: {
           title: '基础详情',
-          hidden: true,
           activeMenu: 'basic-list'
         },
-        component: () => import('@/views/list/basicList/info.vue')
+        component: () => import('@/views/form/basicForm/index.vue')
       }
     ]
   }

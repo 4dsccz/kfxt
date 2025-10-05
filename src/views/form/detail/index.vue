@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="n-layout-page-header">
-      <n-card :bordered="false" title="表单详情">
-        表单除了提交数据，有时也用于显示只读信息。
-      </n-card>
+      <n-card :bordered="false" title="表单详情">表单除了提交数据，有时也用于显示只读信息。</n-card>
     </div>
     <n-card
       :bordered="false"
@@ -22,7 +20,7 @@
         <n-descriptions-item label="付款账户">NaiveUiAdmin@163.com</n-descriptions-item>
         <n-descriptions-item label="转账金额">￥1980.00</n-descriptions-item>
         <n-descriptions-item label="状态">
-          <n-tag type="success"> 已到账</n-tag>
+          <n-tag type="success">已到账</n-tag>
         </n-descriptions-item>
       </n-descriptions>
     </n-card>
@@ -43,7 +41,7 @@
         <n-descriptions-item label="地址">广东省深圳市南山区</n-descriptions-item>
         <n-descriptions-item label="生日">1991-06-04</n-descriptions-item>
         <n-descriptions-item label="认证">
-          <n-tag type="success"> 已认证</n-tag>
+          <n-tag type="success">已认证</n-tag>
         </n-descriptions-item>
       </n-descriptions>
     </n-card>

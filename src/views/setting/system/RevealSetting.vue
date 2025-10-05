@@ -89,112 +89,112 @@
 </template>
 
 <script lang="ts" setup>
-  import { reactive, ref, toRefs } from 'vue';
-  import { useDialog, useMessage } from 'naive-ui';
+import { useDialog, useMessage } from 'naive-ui'
+import { ref } from 'vue'
 
-  const rules = {
-    name: {
-      required: true,
-      message: '请输入网站名称',
-      trigger: 'blur',
-    },
-    mobile: {
-      required: true,
-      message: '请输入联系电话',
-      trigger: 'input',
-    },
-  };
-  const watermarkPlaceList = [
-    {
-      label: '左上',
-      value: 1,
-    },
-    {
-      label: '右上',
-      value: 2,
-    },
-    {
-      label: '居中',
-      value: 3,
-    },
-    {
-      label: '右下',
-      value: 4,
-    },
-  ];
-
-  const pricePreciseNumList = [
-    {
-      label: '2位',
-      value: 1,
-    },
-    {
-      label: '3位',
-      value: 2,
-    },
-    {
-      label: '4位',
-      value: 3,
-    },
-  ];
-  const pricePreciseList = [
-    {
-      label: '四舍五入',
-      value: 1,
-    },
-    {
-      label: '向上取整',
-      value: 2,
-    },
-    {
-      label: '向下取整',
-      value: 3,
-    },
-  ];
-
-  const formRef: any = ref(null);
-  const message = useMessage();
-  const dialog = useDialog();
-
-  const formValue = ref({
-    bigWidth: '',
-    bigHeight: '',
-    smallWidth: '',
-    smallHeight: '',
-    watermarkClarity: null,
-    pricePrecise: 1,
-    isMarketPrice: true,
-    pricePreciseNum: null,
-  });
-
-  function systemOpenChange(value) {
-    if (!value) {
-      dialog.warning({
-        title: '提示',
-        content: '您确定要关闭系统访问吗？该操作立马生效，请慎重操作！',
-        positiveText: '确定',
-        negativeText: '取消',
-        onPositiveClick: () => {
-          message.success('操作成功');
-        },
-        onNegativeClick: () => {
-          formValue.value.systemOpen = true;
-        },
-      });
-    }
+const rules = {
+  name: {
+    required: true,
+    message: '请输入网站名称',
+    trigger: 'blur'
+  },
+  mobile: {
+    required: true,
+    message: '请输入联系电话',
+    trigger: 'input'
   }
+}
+const watermarkPlaceList = [
+  {
+    label: '左上',
+    value: 1
+  },
+  {
+    label: '右上',
+    value: 2
+  },
+  {
+    label: '居中',
+    value: 3
+  },
+  {
+    label: '右下',
+    value: 4
+  }
+]
 
-  function formSubmit() {
-    formRef.value.validate((errors) => {
-      if (!errors) {
-        message.success('验证成功');
-      } else {
-        message.error('验证失败，请填写完整信息');
+const pricePreciseNumList = [
+  {
+    label: '2位',
+    value: 1
+  },
+  {
+    label: '3位',
+    value: 2
+  },
+  {
+    label: '4位',
+    value: 3
+  }
+]
+const pricePreciseList = [
+  {
+    label: '四舍五入',
+    value: 1
+  },
+  {
+    label: '向上取整',
+    value: 2
+  },
+  {
+    label: '向下取整',
+    value: 3
+  }
+]
+
+const formRef: any = ref(null)
+const message = useMessage()
+const dialog = useDialog()
+
+const formValue = ref({
+  bigWidth: '',
+  bigHeight: '',
+  smallWidth: '',
+  smallHeight: '',
+  watermarkClarity: null,
+  pricePrecise: 1,
+  isMarketPrice: true,
+  pricePreciseNum: null
+})
+
+function systemOpenChange(value) {
+  if (!value) {
+    dialog.warning({
+      title: '提示',
+      content: '您确定要关闭系统访问吗？该操作立马生效，请慎重操作！',
+      positiveText: '确定',
+      negativeText: '取消',
+      onPositiveClick: () => {
+        message.success('操作成功')
+      },
+      onNegativeClick: () => {
+        formValue.value.systemOpen = true
       }
-    });
+    })
   }
+}
 
-  function resetForm() {
-    formRef.value.restoreValidation();
-  }
+function formSubmit() {
+  formRef.value.validate(errors => {
+    if (!errors) {
+      message.success('验证成功')
+    } else {
+      message.error('验证失败，请填写完整信息')
+    }
+  })
+}
+
+function resetForm() {
+  formRef.value.restoreValidation()
+}
 </script>
