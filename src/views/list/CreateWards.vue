@@ -12,57 +12,64 @@ import { basicModal, useModal } from '@/components/Modal'
 
 const schemas: FormSchema[] = [
   {
-    field: 'code',
+    field: 'BQDM',
     component: 'NInput',
-    label: '角色编码',
+    label: '病区代码',
     componentProps: {
-      placeholder: '请输入角色编码'
+      placeholder: '请输入病区代码'
     },
-    rules: [{ required: true, message: '请输入角色编码', trigger: ['blur'] }]
+    rules: [{ required: true, message: '请输入病区代码', trigger: ['blur'] }]
   },
   {
-    field: 'name',
+    field: 'BQMC',
     component: 'NInput',
-    label: '角色名称',
+    label: '病区名称',
     componentProps: {
-      placeholder: '请输入角色名称'
+      placeholder: '请输入病区名称'
     },
-    rules: [{ required: true, message: '请输入角色名称', trigger: ['blur'] }]
+    rules: [{ required: true, message: '请输入病区名称', trigger: ['blur'] }]
   },
   {
-    field: 'explain',
+    field: 'KSDM',
     component: 'NInput',
-    label: '描述',
+    label: '对应科室代码',
     componentProps: {
-      type: 'textarea',
-      placeholder: '请输入描述'
+      placeholder: '请输入对应科室代码'
     }
   },
   {
-    field: 'type',
-    component: 'NSelect',
-    label: '角色类别',
+    field: 'HIS_BQDM',
+    component: 'NInput',
+    label: 'HIS病区代码',
     componentProps: {
-      placeholder: '请选择角色类别',
-      options: [
-        { label: '护理', value: 'admin' },
-        { label: '医疗', value: 'user' }
-      ]
-    },
-    rules: [{ required: true, message: '请选择角色类别', trigger: ['blur', 'change'] }]
+      placeholder: '请输入HIS病区代码'
+    }
   },
   {
-    field: 'isDefault',
+    field: 'note',
+    component: 'NInput',
+    label: '备注',
+    componentProps: {
+      placeholder: '请输入备注',
+      type: 'textarea'
+    }
+  },
+  {
+    field: 'is_valid',
     component: 'NSwitch',
-    label: '有效标识',
-    componentProps: {}
+    label: '状态',
+    componentProps: {
+      checkedText: '启用',
+      uncheckedText: '禁用'
+    },
+    defaultValue: 1
   }
 ]
 
 const [registerForm, { submit }] = useForm({
   gridProps: { cols: 1 },
   collapsedRows: 3,
-  labelWidth: 80,
+  labelWidth: 100,
   layout: 'horizontal',
   submitButtonText: '保存',
   showActionButtonGroup: false,
@@ -70,7 +77,7 @@ const [registerForm, { submit }] = useForm({
 })
 
 const [modalRegister, { openModal, closeModal, setSubLoading }] = useModal({
-  title: '新增角色',
+  title: '新增病区',
   subBtuText: '保存'
 })
 

@@ -10,7 +10,7 @@
     <BasicTable
       :columns="columns"
       :request="loadDataTable"
-      :row-key="(row:PdXmItem) => row.id"
+      :row-key="(row:InternItem) => row.id"
       ref="actionRef"
       :actionColumn="actionColumn"
       @update:checked-row-keys="onCheckedRow"
@@ -37,14 +37,14 @@
 </template>
 
 <script lang="ts" setup>
-import { getEvaluationItemsList } from '@/api/table/list'
+import { getUserInfosList } from '@/api/table/list'
 import { BasicForm, FormSchema, useForm } from '@/components/Form/index'
 import { BasicTable, TableAction } from '@/components/Table'
 import { PlusOutlined } from '@vicons/antd'
 import { h, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import CreateModal from './CreateEvaluationItems.vue'
-import { columns, PdXmItem } from './EvaluationItems'
+import CreateModal from './CreateInterns.vue'
+import { columns, InternItem } from './Interns'
 
 const createModalRef = ref()
 
@@ -221,7 +221,7 @@ function addTable() {
 }
 
 const loadDataTable = async res => {
-  return await getEvaluationItemsList({ ...getFieldsValue(), ...res })
+  return await getUserInfosList({ ...getFieldsValue(), ...res })
 }
 
 function onCheckedRow(rowKeys) {

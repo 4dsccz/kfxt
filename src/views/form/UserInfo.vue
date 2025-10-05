@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="n-layout-page-header">
-      <n-card :bordered="false" title="修改通用格式">
+      <n-card :bordered="false" title="新增/修改通用格式">
         目前的示例，主要演示表单提交数据，以及表单验证。
       </n-card>
     </div>

@@ -1,18 +1,18 @@
 import {
-  SettingOutlined,
-  SearchOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  FullscreenOutlined,
+  CheckOutlined,
   FullscreenExitOutlined,
-  PoweroffOutlined,
+  FullscreenOutlined,
   GithubOutlined,
   LockOutlined,
-  ReloadOutlined,
   LogoutOutlined,
-  UserOutlined,
-  CheckOutlined,
-} from '@vicons/antd';
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  PoweroffOutlined,
+  ReloadOutlined,
+  SearchOutlined,
+  SettingOutlined,
+  UserOutlined
+} from '@vicons/antd'
 
 export default {
   SettingOutlined,
@@ -27,5 +27,5 @@ export default {
   ReloadOutlined,
   LogoutOutlined,
   UserOutlined,
-  CheckOutlined,
-};
+  CheckOutlined
+}

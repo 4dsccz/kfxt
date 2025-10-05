@@ -44,10 +44,37 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/list/UserInfo.vue')
       },
       {
+        path: 'Interns',
+        name: 'Interns',
+        meta: {
+          title: '实习生管理',
+          key: 'interns'
+        },
+        component: () => import('@/views/list/Interns.vue')
+      },
+      {
+        path: 'Wards',
+        name: 'Wards',
+        meta: {
+          title: '病区维护',
+          key: 'wards'
+        },
+        component: () => import('@/views/list/Wards.vue')
+      },
+      {
+        path: 'Departments',
+        name: 'Departments',
+        meta: {
+          title: '科室维护',
+          key: 'departments'
+        },
+        component: () => import('@/views/list/Departments.vue')
+      },
+      {
         path: 'basic-info',
         name: 'basic-info-type',
         meta: {
-          title: '基础详情',
+          title: '修改通用格式',
           activeMenu: 'basic-list'
         },
         component: () => import('@/views/form/basicForm/index.vue')
