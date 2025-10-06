@@ -1,35 +1,35 @@
-import { Alova } from '@/utils/http/alova/index';
+import { Alova } from '@/utils/http/alova/index'
 
 export interface TypeVisits {
-  dayVisits: number;
-  rise: number;
-  decline: number;
-  amount: number;
+  dayVisits: number
+  rise: number
+  decline: number
+  amount: number
 }
 export interface TypeSaleroom {
-  weekSaleroom: number;
-  amount: number;
-  degree: number;
+  weekSaleroom: number
+  amount: number
+  degree: number
 }
 
 export interface TypeOrderLarge {
-  weekLarge: number;
-  rise: number;
-  decline: number;
-  amount: number;
+  weekLarge: number
+  rise: number
+  decline: number
+  amount: number
 }
 
 export interface TypeConsole {
-  visits: TypeVisits;
+  visits: TypeVisits
   //销售额
-  saleroom: TypeSaleroom;
+  saleroom: TypeSaleroom
   //订单量
-  orderLarge: TypeOrderLarge;
+  orderLarge: TypeOrderLarge
   //成交额度
-  volume: TypeOrderLarge;
+  volume: TypeOrderLarge
 }
 
 //获取主控台信息
 export function getConsoleInfo() {
-  return Alova.Get<TypeConsole>('/dashboard/console');
+  return Alova.Get<TypeConsole>('/dashboard/console')
 }

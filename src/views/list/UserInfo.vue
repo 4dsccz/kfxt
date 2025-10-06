@@ -50,126 +50,55 @@ const createModalRef = ref()
 
 const schemas: FormSchema[] = [
   {
-    field: 'name',
-    labelMessage: '这是一个提示',
+    field: 'Opcode',
     component: 'NInput',
-    label: '姓名',
+    label: '登录账号',
     componentProps: {
-      placeholder: '请输入姓名',
-      onInput: (e: any) => {
-        console.log(e)
-      }
-    },
-    rules: [{ required: true, message: '请输入姓名', trigger: ['blur'] }]
+      placeholder: '请输入登录账号'
+    }
   },
   {
-    field: 'mobile',
-    component: 'NInputNumber',
-    label: '手机',
+    field: 'Opname',
+    component: 'NInput',
+    label: '用户姓名',
     componentProps: {
-      placeholder: '请输入手机号码',
-      showButton: false,
+      placeholder: '请输入用户姓名'
+    }
+  },
+  {
+    field: 'tel',
+    component: 'NInput',
+    label: '联系方式',
+    componentProps: {
+      placeholder: '请输入手机号',
       onInput: (e: any) => {
-        console.log(e)
+        // 可加简单格式限制，但不要用 InputNumber
       }
     }
   },
   {
-    field: 'type',
+    field: 'Is_valid',
     component: 'NSelect',
-    label: '类型',
-    componentProps: {
-      placeholder: '请选择类型',
-      options: [
-        {
-          label: '舒适性',
-          value: 1
-        },
-        {
-          label: '经济性',
-          value: 2
-        }
-      ],
-      onUpdateValue: (e: any) => {
-        console.log(e)
-      }
-    }
-  },
-  {
-    field: 'makeDate',
-    component: 'NDatePicker',
-    label: '预约时间',
-    defaultValue: 1183135260000,
-    componentProps: {
-      type: 'date',
-      clearable: true,
-      onUpdateValue: (e: any) => {
-        console.log(e)
-      }
-    }
-  },
-  {
-    field: 'makeTime',
-    component: 'NTimePicker',
-    label: '停留时间',
-    componentProps: {
-      clearable: true,
-      onUpdateValue: (e: any) => {
-        console.log(e)
-      }
-    }
-  },
-  {
-    field: 'status',
     label: '状态',
-    //插槽
-    slot: 'statusSlot'
-  },
-  {
-    field: 'makeProject',
-    component: 'NCheckbox',
-    label: '预约项目',
     componentProps: {
-      placeholder: '请选择预约项目',
+      placeholder: '请选择状态',
       options: [
-        {
-          label: '种牙',
-          value: 1
-        },
-        {
-          label: '补牙',
-          value: 2
-        },
-        {
-          label: '根管',
-          value: 3
-        }
-      ],
-      onUpdateChecked: (e: any) => {
-        console.log(e)
-      }
+        { label: '启用', value: 1 },
+        { label: '禁用', value: 0 }
+      ]
     }
   },
   {
-    field: 'makeSource',
-    component: 'NRadioGroup',
-    label: '来源',
+    field: 'createdateRange', // 注意：用范围字段名
+    component: 'NDatePicker',
+    label: '创建日期',
     componentProps: {
-      options: [
-        {
-          label: '网上',
-          value: 1
-        },
-        {
-          label: '门店',
-          value: 2
-        }
-      ],
-      onUpdateChecked: (e: any) => {
-        console.log(e)
-      }
+      type: 'datetimerange',
+      clearable: true,
+      placeholder: '选择日期范围'
     }
   }
+  // 邮箱、性别、HISUSERID 可按需加入，初期建议精简
 ]
 
 const router = useRouter()
